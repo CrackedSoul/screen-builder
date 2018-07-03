@@ -26,25 +26,25 @@ public class FieldBuilder extends ScreenBuilder{
 	}
 
 	private static String genSelectField(FieldItem field) {
-		 ST st = getHtml().getInstanceOf("formInput");
+		 ST st = getHtml().getInstanceOf("formSelect");
 	     st.add("fielditem", field);
 	     return st.render();
 	}
 
 	private static String genDatePickerField(FieldItem field) {
-		ST st = getHtml().getInstanceOf("formInputNum");
-	     st.add("fielditem", field);
-	     return st.render();
-	}
-
-	private static String genNumField(FieldItem field) {
 		ST st = getHtml().getInstanceOf("formDate");
 	     st.add("fielditem", field);
 	     return st.render();
 	}
 
+	private static String genNumField(FieldItem field) {
+		ST st = getHtml().getInstanceOf("formInputNum");
+	     st.add("fielditem", field);
+	     return st.render();
+	}
+
 	private static String genInputField(FieldItem field) {
-		ST st = getHtml().getInstanceOf("formSelect");
+		ST st = getHtml().getInstanceOf("formInput");
 	     st.add("fielditem", field);
 	     return st.render();
 	}

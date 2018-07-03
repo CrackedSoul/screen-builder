@@ -1,3 +1,26 @@
+ trxComp(breadCrumb,form,anchor)::=<<
+<main>
+	$breadCrumb$
+	$form$
+	$anchor$
+</main>
+>>
+
+
+breadCrumbs(breadCrumbs)::=<<
+<nz-breadcrumb [nzSeparator]="'/'">
+	$breadCrumbs:{breadCrumb|<nz-breadcrumb-item>$breadCrumb$</nz-breadcrumb-item>};separator="\n"$
+</nz-breadcrumb>
+>>
+anchor(form)::=<<
+ <nz-anchor nzOffsetTop=150>
+     $form.items:{item|$anchorItem(item)$};separator="\n"$
+ </nz-anchor>
+>>
+anchorItem(item)::=<<$if(item.items)$<nz-link nzHref="#$item.id$" nzTitle="$item.desc$">
+	$item.items:{item|$anchorItem(item)$};separator="\n"$
+</nz-link>$endif$
+>>
 form(form,items)::=<<
 <form nz-form [nzLayout]="vertical" #mainForm="ngForm" (ngSubmit)="onSubmit(mainForm)">
  	$items:{item| $item$};separator="\n"$
@@ -50,3 +73,4 @@ formSelect(fielditem) ::= <<
 </nz-form-item>
 >>
 fieldCheck(fielditem)::=<<$if(fielditem.checks)$$fielditem.checks:{check| $check$};separator=" "$$endif$>>
+ecent(fielditem)::=<<>>

@@ -5,24 +5,19 @@ import java.util.List;
 
 import org.stringtemplate.v4.ST;
 
-import com.cs.screen.builder.item.FieldItem;
 import com.cs.screen.builder.item.FormItem;
 import com.cs.screen.builder.item.GroupItem;
 import com.cs.screen.builder.item.Item;
 
-public class FormBuilder  extends ScreenBuilder{
-	public static String genForm(FormItem form) {
+public class AnchorBuilder extends ScreenBuilder{
+	public static String genAnchor(FormItem form) {
 		List<String> items=new LinkedList<>();
 		for(Item item:form.getItems()) {
 			if(item instanceof GroupItem)
-				items.add(GroupBuilder.genFroup((GroupItem)item));
-			else if(item instanceof FieldItem)
-				items.add(FieldBuilder.genField((FieldItem)item));
+				items.add(GroupBuilder.genFroup((GroupItem)item));			
 		}
-		 ST st = getHtml().getInstanceOf("form");
-	     st.add("form", form);
-	     st.add("items", items);
+		 ST st = getHtml().getInstanceOf("anchor");
+	     st.add("form", form);    
 	     return st.render();
 	}
-	
 }

@@ -1,22 +1,14 @@
-import java.util.LinkedList;
-import java.util.List;
-
-import com.cs.screen.builder.FormBuilder;
-import com.cs.screen.builder.item.FieldItem;
-import com.cs.screen.builder.item.FormItem;
-import com.cs.screen.builder.item.GroupItem;
-import com.cs.screen.builder.item.InputFieldItem;
-import com.cs.screen.builder.item.Item;
+import com.cs.screen.builder.TrxCompHtmlBuilder;
+import com.cs.screen.builder.item.TrxComponment;
+import com.cs.screen.builder.utils.JsonUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class Test {
 	public static void main(String args[]) {
-		List<Item> items=new LinkedList<Item>();			
-		List<Item> item1=new LinkedList<Item>();
-		FieldItem f1=new InputFieldItem("TestFiel1","QWER");
-		item1.add(f1);
-		GroupItem group=new GroupItem(item1,"Group1","Group1Id");
-		items.add(group);
-		FormItem form=new FormItem(items);
-		System.out.println(FormBuilder.genForm(form));
+		 String json=JsonUtils.readJson("E:\\Eclipse\\oxygen3\\ws\\Simple\\screen-builder\\src\\main\\resources\\accTakeDown.json");
+	     JsonObject jsonObject=new Gson().fromJson(json,JsonObject.class);
+	     TrxComponment trxComp=JsonUtils.convertComp(jsonObject);	
+		System.out.println(TrxCompHtmlBuilder.genBreadCrumb(trxComp));
 	}
 }

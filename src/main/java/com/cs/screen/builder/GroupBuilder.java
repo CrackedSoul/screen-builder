@@ -18,7 +18,7 @@ public class GroupBuilder  extends ScreenBuilder{
 			else if(item instanceof FieldItem)
 				items.add(FieldBuilder.genField((FieldItem)item));
 		}
-		 ST st = getTs().getInstanceOf("formGroup");
+		 ST st = getHtml().getInstanceOf("formGroup");
 	     st.add("groupItem", group);
 	     st.add("items", items);
 	     return st.render();

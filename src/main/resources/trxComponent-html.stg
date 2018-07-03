@@ -1,0 +1,81 @@
+comp(trxComp)::=<<
+<nz-breadcrumb [nzSeparator]="'/'">
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Function</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$trxComp.name$</nz-breadcrumb-item>
+</nz-breadcrumb>
+$form(trxComp.form)$
+>>
+form(form) ::= <<
+ <form nz-form [nzLayout]="vertical" #mainForm="ngForm" (ngSubmit)="onSubmit(mainForm)">
+     $form.itemGroups:{itemGroup| $formGroup(itemGroup)$};separator="\n"$
+     $form.items:{item| $formItem(item)$ };separator="\n"$
+ </form>
+ <nz-anchor nzOffsetTop=150>
+     $form.itemGroups:{itemGroup|<nz-link nzHref="#$itemGroup.id$" nzTitle="$itemGroup.desc$"></nz-link>};separator="\n"$
+ </nz-anchor>
+>>
+formGroup1(itemGroup)::=<<
+<details id="$itemGroup.id$" open>
+        <summary style="font-size: larger;font-weight:bold">
+         $itemGroup.desc$
+        </summary>
+           $itemGroup.items:{item| $formItem(item)$};separator=" "$
+</details>
+>>
+formGroup(itemGroup)::=<<
+<nz-collapse [nzBordered]="false" >
+      <nz-collapse-panel [nzHeader]="'$itemGroup.desc$'" [nzActive]="true" id="$itemGroup.id$">
+        $itemGroup.items:{item| $formItem(item)$};separator=" "$
+      </nz-collapse-panel>
+</nz-collapse>
+>>
+
+formItem(item)::=<<
+$if(item.text)$  $formInput(item)$ $endif$
+$if(item.num)$  $formInputNum(item)$ $endif$
+$if(item.date)$  $formDate(item)$ $endif$
+$if(item.select)$  $formSelect(item)$ $endif$
+>>
+formInput(item ) ::= <<
+<nz-form-item>
+    <nz-form-label $if(item.required)$ nzRequired $endif$ [nzSpan]="5">$item.desc$</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+        <input nz-input  style="width: 100%" name="$item.name$" [(ngModel)]="model.$item.name$" #$item.name$="ngModel" $if(item.required)$ required $endif$  $events(item)$ >
+        <nz-form-explain *ngIf="validation($item.name$)">{{getErrorInfo($item.name$)}}</nz-form-explain>
+    </nz-form-control>
+</nz-form-item>
+>>
+formInputNum(item) ::= <<
+<nz-form-item>
+    <nz-form-label $if(item.required)$ nzRequired $endif$ [nzSpan]="5"> $item.desc$</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+        <nz-input-number style="width: 100%" name="$item.name$" [(ngModel)]="model.$item.name$" #$item.name$="ngModel" $if(item.required)$ required $endif$></nz-input-number>
+        <nz-form-explain *ngIf="validation($item.name$)">{{getErrorInfo($item.name$)}}</nz-form-explain>
+    </nz-form-control>
+</nz-form-item>
+>>
+formDate(item) ::= <<
+<nz-form-item>
+    <nz-form-label $if(item.required)$ nzRequired $endif$ [nzSpan]="5"> $item.desc$</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+        <nz-date-picker style="width: 100%" name="$item.name$" [(ngModel)]="model.$item.name$" #$item.name$="ngModel" $if(item.required)$ required $endif$></nz-date-picker>
+        <nz-form-explain *ngIf="validation($item.name$)">{{getErrorInfo($item.name$)}}</nz-form-explain>
+    </nz-form-control>
+</nz-form-item>
+>>
+formSelect(item) ::= <<
+<nz-form-item>
+    <nz-form-label $if(item.required)$ nzRequired $endif$ [nzSpan]="5"> $item.desc$</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+        <nz-select nzShowSearch  nzAllowClear style="width: 100%" name="$item.name$" $if(item.trxItem)$[(ngModel)]="model.$item.name$" #$item.name$="ngModel"$endif$ $if(!item.trxItem)$[(ngModel)]="$item.name$"$endif$  $if(item.required)$ required $endif$>
+           <nz-option *ngFor="let option of $item.optionsName$ " [nzLabel]="option.label " [nzValue]="option.value"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validation($item.name$)">{{getErrorInfo($item.name$)}}</nz-form-explain>
+    </nz-form-control>
+</nz-form-item>
+>>
+events(item)::=<<
+    $item.events:{event| $event(event)$};separator=" "$
+>>
+event(event)::=<<$if(event.onChange)$  (ngModelChange)="$event.funcName$(\$event)" $endif$>>

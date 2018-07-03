@@ -1,0 +1,12 @@
+form(form,items)::=<<
+<form nz-form [nzLayout]="vertical" #mainForm="ngForm" (ngSubmit)="onSubmit(mainForm)">
+ 	$items:{item| $item$};separator="\n"$
+</form>
+>>
+formGroup(groupItem,items)::=<<
+<nz-collapse [nzBordered]="false" >
+      <nz-collapse-panel [nzHeader]="'$groupItem.desc$'" [nzActive]="true" id="$groupItem.id$">
+        $items:{item| $item$};separator="\n"$
+      </nz-collapse-panel>
+</nz-collapse>
+>>

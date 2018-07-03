@@ -1,0 +1,44 @@
+trxComponent(trxComp) ::= <<
+import { Component } from "@angular/core";
+import { TrxFuncBaseComponent } from "src/app/framework/main/trxfunc-base.component";
+
+@Component({
+    templateUrl: 'acc-trxXXX.component.html'
+})
+export class $trxComp.name$Component extends TrxFuncBaseComponent {
+$if(trxComp.form.itemGroups)$ anchorView=true;$endif$
+$if(!trxComp.form.itemGroups)$ anchorView=false;$endif$
+$varDecla(trxComp.form)$
+initData(){$varInit(trxComp.form)$}
+$eventDecla(trxComp.form)$
+}
+>>
+varDecla(form)::=<<
+$form.itemGroups:{itemGroup| $formGroupVar(itemGroup)$};separator=""$
+$form.items:{item| $formItemVar(item)$ };separator="\n"$>>
+formGroupVar(itemGroup)::=<<$itemGroup.items:{item| $formItemVar(item)$};separator="\n"$>>
+formItemVar(item)::=<<$if(item.select)$ $item.optionsName$=[]; $endif$>>
+
+varInit(form)::=<<$form.itemGroups:{itemGroup| $formGroupInit(itemGroup)$};separator=""$
+$form.items:{item| $formItemInit(item)$ };separator="\n"$>>
+formGroupInit(itemGroup)::=<<$itemGroup.items:{item| $formItemInit(item)$};separator="\n"$>>
+formItemInit(item)::=<<
+$if(item.select)$$if(!item.options)$  this.$item.optionsName$=super.getData('$item.optionsName$'); $endif$
+$if(item.options)$  this.$item.optionsName$=[ $item.options:{option| {label:'$option.label$',value:'$option.value$'\} };separator=",\n"$]; $endif$$endif$
+>>
+
+eventDecla(form)::=<<
+$form.itemGroups:{itemGroup| $formGroupEvent(itemGroup)$};separator="\n"$
+$form.items:{item| $formItemEvent(item)$ };separator="\n"$
+>>
+formGroupEvent(itemGroup)::=<<
+$itemGroup.items:{item| $formItemEvent(item)$};separator="\n"$
+>>
+formItemEvent(item)::=<<
+$item.events:{event| $eventDec(event)$ };separator="\n"$
+>>
+eventDec(event)::=<<
+$event.funcName$(){
+    $event.methodBody$
+}
+>>

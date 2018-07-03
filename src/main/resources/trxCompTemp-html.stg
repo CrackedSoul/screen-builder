@@ -1,11 +1,10 @@
- trxComp(breadCrumb,form,anchor)::=<<
+trxComp(breadCrumb,form,anchor)::=<<
 <main>
 	$breadCrumb$
 	$form$
 	$anchor$
 </main>
 >>
-
 
 breadCrumbs(breadCrumbs)::=<<
 <nz-breadcrumb [nzSeparator]="'/'">
@@ -66,7 +65,7 @@ formSelect(fielditem) ::= <<
     <nz-form-label $if(fielditem.required)$ nzRequired $endif$ [nzSpan]="5"> $fielditem.desc$</nz-form-label>
     <nz-form-control [nzSpan]="12">
         <nz-select nzShowSearch  nzAllowClear  name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel" $fieldCheck(fielditem)$ $events(fielditem)$>
-           <nz-option *ngFor="let option of $fielditem.optionsName$ " [nzLabel]="option.label " [nzValue]="option.value"></nz-option>
+           <nz-option *ngFor="let option of $fielditem.optionsName$ " [nzLabel]="option.label " [nzValue]="option.value"></nz-option> 
         </nz-select>
         <nz-form-explain *ngIf="validation($fielditem.name$)">{{getErrorInfo($fielditem.name$)}}</nz-form-explain>
     </nz-form-control>

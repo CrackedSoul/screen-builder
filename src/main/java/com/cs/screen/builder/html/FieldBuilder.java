@@ -1,7 +1,8 @@
-package com.cs.screen.builder;
+package com.cs.screen.builder.html;
 
 import org.stringtemplate.v4.ST;
 
+import com.cs.screen.builder.ScreenBuilder;
 import com.cs.screen.builder.consts.Consts;
 import com.cs.screen.builder.item.FieldItem;
 

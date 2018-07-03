@@ -1,11 +1,12 @@
-package com.cs.screen.builder;
+package com.cs.screen.builder.html;
 
 import org.stringtemplate.v4.ST;
 
+import com.cs.screen.builder.ScreenBuilder;
 import com.cs.screen.builder.item.TrxComponment;
 
 public class TrxCompHtmlBuilder extends ScreenBuilder{
-	public static String genBreadCrumb(TrxComponment trxComp) {		
+	public static String genTrxCompHtml(TrxComponment trxComp) {		
 		 String breadCrumb=BreadCrumbBuilder.genBreadCrumb(trxComp);
 		 String form=FormBuilder.genForm(trxComp.getForm());
 		 String anchor=AnchorBuilder.genAnchor(trxComp.getForm());

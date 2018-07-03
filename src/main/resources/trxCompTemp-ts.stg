@@ -1,12 +1,30 @@
-form(form,items)::=<<
-<form nz-form [nzLayout]="vertical" #mainForm="ngForm" (ngSubmit)="onSubmit(mainForm)">
- 	$items:{item| $item$};separator="\n"$
-</form>
+trxComponent(trxComp,varDecla,varInit,function) ::= <<
+import { Component } from "@angular/core";
+import { TrxFuncBaseComponent } from "src/app/framework/main/trxfunc-base.component";
+
+@Component({
+    templateUrl: 'acc-trxXXX.component.html'
+})
+export class $trxComp.name$Component extends TrxFuncBaseComponent {
+	$if(trxComp.form.items)$anchorView=true;$endif$
+	$if(!trxComp.form.items)$anchorView=false;$endif$
+	$varDecla:{var|$var$};separator="\n"$
+
+	initData(){
+	  $varInit:{var|$var$};separator="\n"$
+	}
+
+	$function:{func|$func$};separator="\n"$
+}
 >>
-formGroup(groupItem,items)::=<<
-<nz-collapse [nzBordered]="false" >
-      <nz-collapse-panel [nzHeader]="'$groupItem.desc$'" [nzActive]="true" id="$groupItem.id$">
-        $items:{item| $item$};separator="\n"$
-      </nz-collapse-panel>
-</nz-collapse>
+varSelectDecal(fieldItem)::=<<
+$fieldItem.optionsName$=[]; 
+>>
+varSelectInit(fieldItem)::=<<
+$if(!fieldItem.options)$this.$fieldItem.optionsName$=super.getData('$fieldItem.optionsName$'); $endif$
+$if(fieldItem.options)$this.$fieldItem.optionsName$=[
+$fieldItem.options:{option|    {label:'$option.label$',value:'$option.value$'\}};separator=",\n"$
+]; $endif$
+>>
+functionDecl(function)::=<<
 >>

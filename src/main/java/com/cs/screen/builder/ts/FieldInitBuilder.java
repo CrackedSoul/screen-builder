@@ -1,13 +1,18 @@
 package com.cs.screen.builder.ts;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 
-import com.cs.screen.builder.ScreenBuilder;
+import com.cs.screen.builder.STGroupBuilder;
 import com.cs.screen.builder.consts.Consts;
 import com.cs.screen.builder.item.FieldItem;
+import com.cs.screen.builder.item.SelectFieldItem;
 
-public class FieldInitBuilder extends ScreenBuilder {
-	public static String genFieldInit(FieldItem field) {
+public class FieldInitBuilder extends STGroupBuilder {
+	public FieldInitBuilder(STGroup stGroup) {
+		super(stGroup);
+	}
+	public  String genFieldInit(FieldItem field) {
 		String rtn="";
 		switch(field.getType()) {
 		 case Consts.Type_TextInput:
@@ -25,23 +30,27 @@ public class FieldInitBuilder extends ScreenBuilder {
 		}
 		return rtn;		
 	}
-	private static String genSelectField(FieldItem field) {
-		 ST st = getTs().getInstanceOf("varSelectInit");
-	     st.add("fieldItem", field);
-	     return st.render();
+	private  String genSelectField(FieldItem field) {
+		if (((SelectFieldItem) field).getOptionsName() != null) {
+			ST st = getStGroup().getInstanceOf("varSelectInit");
+			st.add("fieldItem", field);
+			return st.render();
+		}else {
+			return null;
+		}
 	}
 
-	private static String genDatePickerField(FieldItem field) {
+	private  String genDatePickerField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private static String genNumField(FieldItem field) {
+	private  String genNumField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private static String genInputField(FieldItem field) {
+	private  String genInputField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}

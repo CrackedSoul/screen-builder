@@ -1,13 +1,18 @@
 package com.cs.screen.builder.html;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 
-import com.cs.screen.builder.ScreenBuilder;
+import com.cs.screen.builder.STGroupBuilder;
 import com.cs.screen.builder.consts.Consts;
 import com.cs.screen.builder.item.FieldItem;
 
-public class FieldBuilder extends ScreenBuilder{
-	public static String genField(FieldItem field) {
+public class FieldBuilder extends STGroupBuilder{
+	public FieldBuilder(STGroup stGroup) {
+		super(stGroup);
+	}
+
+	public  String genField(FieldItem field) {
 		String rtn="";
 		switch(field.getType()) {
 		 case Consts.Type_TextInput:
@@ -26,26 +31,26 @@ public class FieldBuilder extends ScreenBuilder{
 		return rtn;
 	}
 
-	private static String genSelectField(FieldItem field) {
-		 ST st = getHtml().getInstanceOf("formSelect");
+	private  String genSelectField(FieldItem field) {
+		 ST st = getStGroup().getInstanceOf("formSelect");
 	     st.add("fielditem", field);
 	     return st.render();
 	}
 
-	private static String genDatePickerField(FieldItem field) {
-		ST st = getHtml().getInstanceOf("formDate");
+	private  String genDatePickerField(FieldItem field) {
+		ST st = getStGroup().getInstanceOf("formDate");
 	     st.add("fielditem", field);
 	     return st.render();
 	}
 
-	private static String genNumField(FieldItem field) {
-		ST st = getHtml().getInstanceOf("formInputNum");
+	private  String genNumField(FieldItem field) {
+		ST st = getStGroup().getInstanceOf("formInputNum");
 	     st.add("fielditem", field);
 	     return st.render();
 	}
 
-	private static String genInputField(FieldItem field) {
-		ST st = getHtml().getInstanceOf("formInput");
+	private  String genInputField(FieldItem field) {
+		ST st = getStGroup().getInstanceOf("formInput");
 	     st.add("fielditem", field);
 	     return st.render();
 	}

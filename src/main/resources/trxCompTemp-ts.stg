@@ -1,11 +1,11 @@
-trxComponent(trxComp,varDecla,varInit,function) ::= <<
+trxComponent(trxComp,name,compName,varDecla,varInit,function) ::= <<
 import { Component } from "@angular/core";
 import { TrxFuncBaseComponent } from "src/app/framework/main/trxfunc-base.component";
 
 @Component({
-    templateUrl: 'acc-trxXXX.component.html'
+    templateUrl: '$name$.component.html'
 })
-export class $trxComp.name$Component extends TrxFuncBaseComponent {
+export class $compName$Component extends TrxFuncBaseComponent {
 	$if(trxComp.form.items)$anchorView=true;$endif$
 	$if(!trxComp.form.items)$anchorView=false;$endif$
 	$varDecla:{var|$var$};separator="\n"$
@@ -17,14 +17,7 @@ export class $trxComp.name$Component extends TrxFuncBaseComponent {
 	$function:{func|$func$};separator="\n"$
 }
 >>
-varSelectDecal(fieldItem)::=<<
-$fieldItem.optionsName$=[]; 
->>
-varSelectInit(fieldItem)::=<<
-$if(!fieldItem.options)$this.$fieldItem.optionsName$=super.getData('$fieldItem.optionsName$'); $endif$
-$if(fieldItem.options)$this.$fieldItem.optionsName$=[
-$fieldItem.options:{option|    {label:'$option.label$',value:'$option.value$'\}};separator=",\n"$
-]; $endif$
->>
+varSelectDecal(fieldItem)::=<<$if(fieldItem.optionsName)$$fieldItem.optionsName$=[]; $endif$>>
+varSelectInit(fieldItem)::=<<$if(fieldItem.optionsName)$this.$fieldItem.optionsName$=this.getData('$fieldItem.optionsName$');$endif$>>
 functionDecl(function)::=<<
 >>

@@ -8,24 +8,9 @@
       "id":"Acc-BaseInfo",
       "items":[
         {
-          "type":"select",
+          "type":"input",
           "desc":"Customer ID",
-          "name":"IA_C_BORROWER_ID",       
-          "options":[
-            {
-              "label":"Google",
-              "value":"Google"
-            },
-            {
-              "label":"Baidu",
-              "value":"Baidu"
-            },
-            {
-              "label":"SoSo",
-              "value":"SoSo"
-            }
-          ],
-          "optionsName":"customers",
+          "name":"IA_C_BORROWER_ID",
           "required":true
         },
         {
@@ -84,8 +69,7 @@
               "label":"Floating Rate",
               "value":"Floating"
             }
-          ],
-          "optionsName":"baseRateTypes",
+          ],         
           "required":false
         },
         {
@@ -124,8 +108,7 @@
               "label":"3",
               "value":"3"
             }
-          ],
-          "optionsName":"fltRatNos",
+          ],       
           "required":false
         },
         {
@@ -142,7 +125,6 @@
               "value":"Floating"
             }
           ],
-          "optionsName":"spreadRateTypes",
           "required":false
         },
         {
@@ -180,7 +162,6 @@
               "value":"3"
             }
           ],
-          "optionsName":"sprRatNos",
           "required":false
         },
         {
@@ -215,7 +196,6 @@
               "value":"N"
             }
           ],
-          "optionsName":"amzFlags",
           "required":false
         },
         {
@@ -244,7 +224,6 @@
               "value":"N"
             }
           ],
-          "optionsName":"dlyFlags",
           "required":false
         }
       ]
@@ -267,7 +246,6 @@
               "value":null
             }
           ],
-          "optionsName":"scheTypes",
           "required":false
         },
         {
@@ -312,7 +290,6 @@
               "value":null
             }
           ],
-          "optionsName":"cpnTypes",
           "required":false
         }
       ]

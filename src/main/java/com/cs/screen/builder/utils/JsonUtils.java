@@ -37,7 +37,7 @@ public class JsonUtils {
                 buffer.append(content).append("\n");
                 content = reader.readLine();
             }
-            return content = buffer.toString();// 杩斿洖
+            return content = buffer.toString();// 鏉╂柨娲�
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -50,12 +50,10 @@ public class JsonUtils {
                 e.printStackTrace();
             }
         }
-        return "";// 娌″�煎氨杩斿洖绌�
+        return "";// 濞屸�筹拷鐓庢皑鏉╂柨娲栫粚锟�
     }
     public static TrxComponment convertComp(JsonObject jsonComp){
     	TrxComponment rtn=new TrxComponment();
-        rtn.setName(getStr(jsonComp.get("name")));
-        rtn.setGroup(getStr(jsonComp.get("group")));
         rtn.setForm(convertForm(jsonComp.get("form").getAsJsonObject()));
         rtn.setBreadCrumb(getBreadCurmbs(jsonComp.getAsJsonArray("breadCrumb")));
         return  rtn;
@@ -114,10 +112,5 @@ public class JsonUtils {
                 return selectItem;
         }
         return null;
-    }
-    private static String getStr(JsonElement element){
-        if (element==null)
-            return "";
-        return element.getAsString();
     }
 }

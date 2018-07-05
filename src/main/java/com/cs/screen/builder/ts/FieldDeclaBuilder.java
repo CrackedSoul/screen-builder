@@ -1,49 +1,59 @@
 package com.cs.screen.builder.ts;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 
-import com.cs.screen.builder.ScreenBuilder;
+import com.cs.screen.builder.STGroupBuilder;
 import com.cs.screen.builder.consts.Consts;
 import com.cs.screen.builder.item.FieldItem;
+import com.cs.screen.builder.item.SelectFieldItem;
 
-public class FieldDeclaBuilder extends ScreenBuilder{
+public class FieldDeclaBuilder extends STGroupBuilder {
 
-	public static String genFieldDecla(FieldItem field) {
-		String rtn="";
-		switch(field.getType()) {
-		 case Consts.Type_TextInput:
-			 rtn=genInputField(field);
-			 break;
-		 case Consts.Type_NumInput:
-			 rtn=genNumField(field);
-			 break;
-		 case Consts.Type_DatePicker:
-			 rtn=genDatePickerField(field);
-			 break;
-		 case Consts.Type_Select:
-			 rtn=genSelectField(field);
-			 break;
+	public FieldDeclaBuilder(STGroup stGroup) {
+		super(stGroup);
+	}
+
+	public String genFieldDecla(FieldItem field) {
+		String rtn = "";
+		switch (field.getType()) {
+		case Consts.Type_TextInput:
+			rtn = genInputField(field);
+			break;
+		case Consts.Type_NumInput:
+			rtn = genNumField(field);
+			break;
+		case Consts.Type_DatePicker:
+			rtn = genDatePickerField(field);
+			break;
+		case Consts.Type_Select:
+			rtn = genSelectField(field);
+			break;
 		}
-		return rtn;		
+		return rtn;
 	}
 
-	private static String genSelectField(FieldItem field) {
-		 ST st = getTs().getInstanceOf("varSelectDecal");
-	     st.add("fieldItem", field);
-	     return st.render();
+	private String genSelectField(FieldItem field) {
+		if (((SelectFieldItem) field).getOptionsName() != null) {
+			ST st = getStGroup().getInstanceOf("varSelectDecal");
+			st.add("fieldItem", field);
+			return st.render();
+		}else {
+			return null;
+		}
 	}
 
-	private static String genDatePickerField(FieldItem field) {
+	private String genDatePickerField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private static String genNumField(FieldItem field) {
+	private String genNumField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private static String genInputField(FieldItem field) {
+	private String genInputField(FieldItem field) {
 		// TODO Auto-generated method stub
 		return null;
 	}

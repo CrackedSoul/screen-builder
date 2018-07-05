@@ -4,26 +4,45 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 
-import com.cs.screen.builder.ScreenBuilder;
+import com.cs.screen.builder.STGroupBuilder;
 import com.cs.screen.builder.item.FieldItem;
 import com.cs.screen.builder.item.FormItem;
 import com.cs.screen.builder.item.GroupItem;
 import com.cs.screen.builder.item.Item;
 
-public class FormBuilder  extends ScreenBuilder{
-	public static String genForm(FormItem form) {
+public class FormBuilder  extends STGroupBuilder{
+	private GroupBuilder groupBuilder;
+	private FieldBuilder fieldBuilder;
+	public String genForm(FormItem form) {
 		List<String> items=new LinkedList<>();
 		for(Item item:form.getItems()) {
 			if(item instanceof GroupItem)
-				items.add(GroupBuilder.genGroup((GroupItem)item));
+				items.add(groupBuilder.genGroup((GroupItem)item));
 			else if(item instanceof FieldItem)
-				items.add(FieldBuilder.genField((FieldItem)item));
+				items.add(fieldBuilder.genField((FieldItem)item));
 		}
-		 ST st = getHtml().getInstanceOf("form");
+		 ST st = getStGroup().getInstanceOf("form");
 	     st.add("form", form);
 	     st.add("items", items);
 	     return st.render();
 	}
-	
+	public GroupBuilder getGroupBuilder() {
+		return groupBuilder;
+	}
+	public void setGroupBuilder(GroupBuilder groupBuilder) {
+		this.groupBuilder = groupBuilder;
+	}
+	public FieldBuilder getFieldBuilder() {
+		return fieldBuilder;
+	}
+	public void setFieldBuilder(FieldBuilder fieldBuilder) {
+		this.fieldBuilder = fieldBuilder;
+	}
+	public FormBuilder(STGroup stGroup) {
+		super(stGroup);
+		fieldBuilder=new FieldBuilder(stGroup);
+		groupBuilder=new GroupBuilder(stGroup);
+	}	
 }

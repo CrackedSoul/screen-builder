@@ -1,0 +1,376 @@
+{
+    "name": "AccTakeDown",
+    "component": "TrxFuncComponent",
+    "eventType": "8030",
+    "content": {
+        "breadCrumb": ["Home","Function","Take Down"],
+        "form": [
+            {
+                "tag": "group",
+      			"id":"Acc-BaseInfo",
+                "desc":"Base Information",
+      			"items":[
+                    {
+                          "tag": "item",
+				          "type":"input",
+				          "desc":"Customer ID",
+				          "name":"IA_C_BORROWER_ID",
+				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				          "type":"input",
+				          "desc":"Reference No.",
+				          "name":"IA_C_REF_NO",          
+				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				          "type":"date-picker",
+				          "desc":"Transaction Value Date.",
+				          "name":"IA_D_TRX_VALDATE",         
+				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				           "type":"date-picker",
+				          "desc":"Due Date",
+				          "name":"IA_D_DUE_DATE",
+				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				          "type":"input",
+				          "desc":"Customer ID",
+				          "name":"IA_C_BORROWER_ID",
+				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				          "type":"input-number",
+				          "desc":"Grace Days",
+				          "name":"IA_I_GRACE_DAYS"
+                    },
+                    {
+                          "tag": "item",
+				          "type":"select",
+				          "desc":"Currency Code",
+				          "name":"IA_C_CCY_CODE",
+				          "optionsName":"ccys",
+				          "checks":["required"]
+                    },
+                    {
+                       	  "tag": "item",
+                          "type":"input-number",
+				          "desc":"Transaction Amount",
+				          "name":"IA_Y_TRX_AMT",
+				          "checks":["required"]
+                    }
+                ]
+            },
+            {
+                "tag": "group",
+			    "id":"Acc-RateInfo",
+      			"desc":"Rate Information",
+      			"items":[
+                    {
+	                	  "tag": "item",
+			              "type":"select",
+				          "desc":"Base Rate Type",
+				          "name":"BaseRateType",
+				          "options":[
+				            {
+				              "label":"Fixed Rate",
+				              "value":"Fixed"
+				            },
+				            {
+				              "label":"Floating Rate",
+				              "value":"Floating"
+				            }
+				          ]
+            		},
+            		{
+	                	  "tag": "item",
+			              "type":"input-number",
+				          "desc":"Fixed Base Rate",
+				          "name":"IA_N_FIX_BAS_RATE",
+				          "showIf":"model.BaseRateType=='Fixed'"
+            		},
+            		{
+	                	  "tag": "item",
+			              "type":"select",
+			              "desc":"Floating Base Rate Table ID",
+				          "name":"IA_C_FLT_RAT_TBLID",
+				          "optionsName":"fltRatIds",
+				          "showIf":"model.BaseRateType=='Floating'"
+            		},
+            		{
+	                	  "tag": "item",
+			              "type":"select",
+				          "desc":"Floating Base Rate Number",
+				          "name":"IA_I_FLT_RATE_NO",
+				          "events":[
+				          ],
+				          "options":[
+				            {
+				              "label":"0",
+				              "value":"0"
+				            },
+				            {
+				              "label":"1",
+				              "value":"1"
+				            },
+				            {
+				              "label":"2",
+				              "value":"2"
+				            },
+				            {
+				              "label":"3",
+				              "value":"3"
+				            }
+				          ],       
+				          "showIf":"model.BaseRateType=='Floating'"
+            		},
+            		{
+	                	  "tag": "item",
+			              "type":"select",
+				          "desc":"Spread Rate Type",
+				          "name":"SpreadRateType",
+				          "options":[
+				            {
+				              "label":"Fixed Rate",
+				              "value":"Fixed"
+				            },
+				            {
+				              "label":"Floating Rate",
+				              "value":"Floating"
+				            }
+				          ]
+            		},
+            		
+            		{
+	                	  "tag": "item",
+			              "type":"input-number",
+				          "desc":"Fixed Spread Rate",
+				          "name":"IA_N_FIX_SPR_RATE",
+				          "showIf":"model.SpreadRateType=='Fixed'"   
+            		},{
+	                	  "tag": "item",
+			              "type":"select",
+				          "desc":"Floating Spread Rate Table ID",
+				          "name":"IA_C_SPR_RAT_TBLID",
+				          "optionsName":"sprRatIds",
+				          "showIf":"model.SpreadRateType=='Floating'"
+            		},
+            		{
+	                	  "tag": "item",
+			              "type":"select",
+				          "desc":"Floating Spread Rate Number",
+				          "name":"IA_I_SPR_RATE_NO",
+				          "options":[
+				            {
+				              "label":"0",
+				              "value":"0"
+				            },
+				            {
+				              "label":"1",
+				              "value":"1"
+				            },
+				            {
+				              "label":"2",
+				              "value":"2"
+				            },
+				            {
+				              "label":"3",
+				              "value":"3"
+				            }
+				          ],
+				          "showIf":"model.SpreadRateType=='Floating'"
+            		},
+            		{
+		            	  "tag": "item",
+		            	  "type":"input-number",
+				          "desc":"Fixed Profit Rate",
+				          "name":"IA_N_FIX_PFT_RATE"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"input-number",
+				          "desc":"Penalty Rate",
+				          "name":"IA_N_PEN_RATE"
+				    }
+            ]},
+        	{
+                "tag": "group",
+			    "id":"Acc-PreDisInfo",
+			    "desc":"Premium/Discount Information",
+      			"items":[
+      				{
+				    	  "tag": "item",
+				    	  "type":"select",
+				          "desc":"Amortize Flag",
+				          "name":"IA_C_AMZ_FLG",
+				          "options":[
+				            {
+				              "label":"Yes",
+				              "value":"Y"
+				            },
+				            {
+				              "label":"No",
+				              "value":"N"
+				            }
+				          ]
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"date-picker",
+				          "desc":"Last Coupon Payment Date",
+				          "name":"IA_D_LAST_CPNDATE"
+				    }
+				    ,
+				    {
+				    	  "tag": "item",
+				    	  "type":"input-number",
+				          "desc":"Book Transaction Amount",
+				          "name":"IA_Y_BV_TRX_AMT"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"select",
+				          "desc":"Delay Flag",
+				          "name":"IA_C_DLY_FLG",
+				          "options":[
+				            {
+				              "label":"Yes",
+				              "value":"Y"
+				            },
+				            {
+				              "label":"No",
+				              "value":"N"
+				            }
+				          ]
+				    }
+      			]
+      		},
+        	{
+                "tag": "group",
+      			"id":"Acc-PSInfo",
+      			"desc":"Payment Schedule Information",
+      			"items":[
+				    {
+				    	  "tag": "item",
+				    	  "type":"select",
+				          "desc":"Payment Schedule Type",
+				          "name":"IA_C_SCHE_TYPE",
+				          "options":[
+				            {
+				              "label":"Yes",
+				              "value":"Y"
+				            },
+				            {
+				              "label":null,
+				              "value":null
+				            }
+				          ]
+				    },				   
+				    {
+				    	  "tag": "item",
+				    	  "type":"select",
+				          "desc":"Coupon Type",
+				          "name":"IA_C_CPN_TYPE",
+				          "options":[
+				            {
+				              "label":"Annual",
+				              "value":"Annual"
+				            },
+				            {
+				              "label":"Semi-Annual",
+				              "value":"Semi-Annual"
+				            },
+				            {
+				              "label":"Quarterly",
+				              "value":"Quarterly"
+				            },
+				            {
+				              "label":"Bi-Monthly",
+				              "value":"Bi-Monthly"
+				            },
+				            {
+				              "label":"Monthly",
+				              "value":"Monthly"
+				            },
+				            {
+				              "label":"Weekly",
+				              "value":"Weekly"
+				            },
+				            {
+				              "label":"Daily",
+				              "value":"Daily"
+				            },
+				            {
+				              "label":"AtMaturity",
+				              "value":"AtMaturity"
+				            },
+				            {
+				              "label":null,
+				              "value":null
+				            }
+				          ]
+				    }
+				 ]
+      		},
+        	{
+                "tag": "group",
+			    "id":"Acc-PostInfo",
+			    "desc":"Accrual/Posting Information",
+      			"items":[
+				    {
+				    	  "tag": "item",
+				    	  "type":"select",
+				          "desc":"Account Type",
+				          "name":"IA_C_ACCOUNT_TYPE",
+				          "optionsName":"accountTypes",
+				          "checks":["required"]
+				    }
+				 ]
+      		},
+        	{
+                "tag": "group",
+			    "id":"Acc-OtherInfo",
+      			"desc":"Other Information",
+      			"items":[
+      				{
+				    	  "tag": "item",
+				    	  "type":"input",
+				          "desc":"Transaction Code",
+				          "name":"IA_C_TRANS_CODE"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"input",
+				          "desc":"Customer Code",
+				          "name":"IA_C_CUST_CODE"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"input",
+				          "desc":"Purpose ID",
+				          "name":"IA_C_PURP_ID"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"input",
+				          "desc":"Form ID",
+				          "name":"IA_C_FORM_ID"
+				    },
+				    {
+				    	  "tag": "item",
+				    	  "type":"input",
+				          "desc":"Coupon Day",
+				          "name":"IA_C_ORIG_CPNDAY"
+				    }
+      			]
+      		}   
+        ]
+    }
+}

@@ -1,8 +1,8 @@
 trxComp(breadCrumb,form,anchor)::=<<
 <main>
 	$breadCrumb$
-	$form$
 	$anchor$
+	$form$
 </main>
 >>
 
@@ -12,21 +12,19 @@ breadCrumbs(breadCrumbs)::=<<
 </nz-breadcrumb>
 >>
 anchor(form)::=<<
- <nz-anchor nzOffsetTop=150>
-     $form.items:{item|$anchorItem(item)$};separator="\n"$
- </nz-anchor>
+$if(form.items)$<anchor [links]="formALinks"></anchor>$endif$
 >>
 anchorItem(item)::=<<$if(item.items)$<nz-link nzHref="#$item.id$" nzTitle="$item.desc$">
 	$item.items:{item|$anchorItem(item)$};separator="\n"$
 </nz-link>$endif$
->>
+>> 
 form(form,items)::=<<
 <form nz-form [nzLayout]="vertical" #mainForm="ngForm" (ngSubmit)="onSubmit(mainForm)">
  	$items:{item| $item$};separator="\n"$
 </form>
 >>
 formGroup(groupItem,items)::=<<
-<nz-collapse [nzBordered]="false" >
+<nz-collapse [nzBordered]="false"$showIf(groupItem)$>
       <nz-collapse-panel [nzHeader]="'$groupItem.desc$'" [nzActive]="true" id="$groupItem.id$">
         $items:{item| $item$};separator="\n"$
       </nz-collapse-panel>
@@ -34,43 +32,44 @@ formGroup(groupItem,items)::=<<
 >>
 
 formInput(fielditem) ::= <<
-<nz-form-item>
-    <nz-form-label $if(fielditem.required)$ nzRequired $endif$ [nzSpan]="5">$fielditem.desc$</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-        <input nz-input name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel" $fieldCheck(fielditem)$ $events(fielditem)$ >
-        <nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>
+<nz-form-item$showIf(fielditem)$>
+    <nz-form-label [nzXs]="{span:24}" [nzSm]="{span:6}" $if(fielditem.required)$nzRequired$endif$>$fielditem.desc$</nz-form-label>
+    <nz-form-control [nzXs]="{span:24}" [nzSm]="{span:18}">
+        <input nz-input name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel"$fieldCheck(fielditem)$$events(fielditem)$>
+        $if(fielditem.checks)$<nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>$endif$
     </nz-form-control>
 </nz-form-item>
 >>
 formInputNum(fielditem) ::= <<
-<nz-form-item>
-    <nz-form-label $if(fielditem.required)$ nzRequired $endif$ [nzSpan]="5"> $fielditem.desc$</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-        <nz-input-number name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel" $fieldCheck(fielditem)$ $events(fielditem)$></nz-input-number>
-        <nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>
+<nz-form-item$showIf(fielditem)$>
+    <nz-form-label $if(fielditem.required)$nzRequired$endif$ [nzXs]="{span:24}" [nzSm]="{span:6}">$fielditem.desc$</nz-form-label>
+    <nz-form-control [nzXs]="{span:24}" [nzSm]="{span:18}">
+        <nz-input-number name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel"$fieldCheck(fielditem)$$events(fielditem)$></nz-input-number>
+        $if(fielditem.checks)$<nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>$endif$
     </nz-form-control>
 </nz-form-item>
 >>
 formDate(fielditem) ::= <<
-<nz-form-item>
-    <nz-form-label $if(fielditem.required)$ nzRequired $endif$ [nzSpan]="5"> $fielditem.desc$</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-        <nz-date-picker name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel" $fieldCheck(fielditem)$ $events(fielditem)$></nz-date-picker>
-        <nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>
+<nz-form-item$showIf(fielditem)$>
+    <nz-form-label $if(fielditem.required)$nzRequired$endif$ [nzXs]="{span:24}" [nzSm]="{span:6}">$fielditem.desc$</nz-form-label>
+    <nz-form-control [nzXs]="{span:24}" [nzSm]="{span:18}">
+        <nz-date-picker name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel"$fieldCheck(fielditem)$$events(fielditem)$></nz-date-picker>
+        $if(fielditem.checks)$<nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>$endif$
     </nz-form-control>
 </nz-form-item>
 >>
 formSelect(fielditem) ::= <<
-<nz-form-item>
-    <nz-form-label $if(fielditem.required)$ nzRequired $endif$ [nzSpan]="5"> $fielditem.desc$</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-        <nz-select nzShowSearch  nzAllowClear  name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel" $fieldCheck(fielditem)$ $events(fielditem)$>
-          $if(fielditem.optionsName)$<nz-option *ngFor="let option of $fielditem.optionsName$ " [nzLabel]="option.label " [nzValue]="option.value"></nz-option> $endif$
+<nz-form-item$showIf(fielditem)$>
+    <nz-form-label $if(fielditem.required)$nzRequired$endif$ [nzXs]="{span:24}" [nzSm]="{span:6}">$fielditem.desc$</nz-form-label>
+    <nz-form-control [nzXs]="{span:24}" [nzSm]="{span:18}">
+        <nz-select nzShowSearch  nzAllowClear  name="$fielditem.name$" [(ngModel)]="model.$fielditem.name$" #$fielditem.name$="ngModel"$fieldCheck(fielditem)$$events(fielditem)$>
+          $if(fielditem.optionsName)$<nz-option *ngFor="let option of $fielditem.optionsName$" [nzLabel]="option.label" [nzValue]="option.value"></nz-option> $endif$
           $if(!fielditem.optionsName)$$fielditem.options:{option|<nz-option nzLabel="$option.label$" nzValue="$option.value$"></nz-option>};separator="\n"$$endif$
         </nz-select>
-        <nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>
+       $if(fielditem.checks)$<nz-form-explain *ngIf="check($fielditem.name$)">{{getInfo($fielditem.name$)}}</nz-form-explain>$endif$
     </nz-form-control>
 </nz-form-item>
 >>
-fieldCheck(fielditem)::=<<$if(fielditem.checks)$$fielditem.checks:{check| $check$};separator=" "$$endif$>>
+fieldCheck(fielditem)::=<<$if(fielditem.checks)$ $fielditem.checks:{check| $check$};separator=" "$$endif$>>
 events(fielditem)::=<<>>
+showIf(item)::=<<$if(item.showIf)$ *ngIf="$item.showIf$"$endif$>>

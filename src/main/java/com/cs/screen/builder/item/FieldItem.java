@@ -7,20 +7,21 @@ public abstract class FieldItem implements Item {
     private String desc;
     private String name;
     private List<Event> events;
-    private List<String> ckecks;
+    private List<String> checks;
     private boolean required;
+    private String showIf;
     
 	public FieldItem() {
 		super();
 		updaterequired();
 	}
-	public FieldItem(String type, String desc, String name, List<Event> events, List<String> ckecks) {
+	public FieldItem(String type, String desc, String name, List<Event> events, List<String> checks) {
 		super();
 		this.type = type;
 		this.desc = desc;
 		this.name = name;
 		this.events = events;
-		this.ckecks = ckecks;
+		this.checks = checks;
 		updaterequired();
 	}
 
@@ -48,11 +49,11 @@ public abstract class FieldItem implements Item {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
-	public List<String> getCkecks() {
-		return ckecks;
+	public List<String> getChecks() {
+		return checks;
 	}
-	public void setCkecks(List<String> ckecks) {
-		this.ckecks = ckecks;
+	public void setChecks(List<String> checks) {
+		this.checks = checks;
 		updaterequired();
 	}
 	
@@ -62,12 +63,19 @@ public abstract class FieldItem implements Item {
 	public void setRequired(boolean required) {
 		this.required = required;
 	}
-	private void updaterequired() {
-		if (this.ckecks==null) {
+	
+	public String getShowIf() {
+		return showIf;
+	}
+	public void setShowIf(String showIf) {
+		this.showIf = showIf;
+	}
+	public void updaterequired() {
+		if (this.checks==null) {
 			this.required=false;
 			return;
 		}
-		for(String check:ckecks) {
+		for(String check:checks) {
 			if ("required".equals(check)) {
 				this.required=true;
 				return;

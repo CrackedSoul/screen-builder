@@ -17,7 +17,7 @@ public class FormBuilder  extends STGroupBuilder{
 	private FieldBuilder fieldBuilder;
 	public String genForm(FormItem form) {
 		List<String> items=new LinkedList<>();
-		for(Item item:form.getItems()) {
+		for(Item item:form.getForm()) {
 			if(item instanceof GroupItem)
 				items.add(groupBuilder.genGroup((GroupItem)item));
 			else if(item instanceof FieldItem)

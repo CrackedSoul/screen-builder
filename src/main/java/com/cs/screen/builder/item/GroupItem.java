@@ -6,7 +6,7 @@ public class GroupItem implements Item {
 	private List<Item> items;
     private String desc;
     private String id;
-    
+    private String showIf;
     
 	public GroupItem() {
 		super();
@@ -34,6 +34,12 @@ public class GroupItem implements Item {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getShowIf() {
+		return showIf;
+	}
+	public void setShowIf(String showIf) {
+		this.showIf = showIf;
 	}
     
 }

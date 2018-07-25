@@ -1,23 +1,35 @@
 trxComponent(trxComp,name,compName,varDecla,varInit,function) ::= <<
 import { Component } from "@angular/core";
-import { TrxFuncBaseComponent } from "src/app/framework/main/trxfunc-base.component";
+import { TrxFuncComponent } from "src/app/domain/eloan/trxfunc/trxfunc.component";
 
 @Component({
     templateUrl: '$name$.component.html'
 })
-export class $compName$Component extends TrxFuncBaseComponent {
-	$if(trxComp.form.items)$anchorView=true;$endif$
-	$if(!trxComp.form.items)$anchorView=false;$endif$
+export class $compName$Component extends TrxFuncComponent {
+	$if(trxComp.content.form)$formALinks = [];$endif$
 	$varDecla:{var|$var$};separator="\n"$
-
+	
 	initData(){
-	  $varInit:{var|$var$};separator="\n"$
+	  $initformALinks(trxComp.content.form)$
+	  $varInit:{var|$var$};separator="\n"$  
 	}
-
+	
 	$function:{func|$func$};separator="\n"$
+	$if(trxComp.eventType)$
+	protected getEventType(): string {
+		return '$trxComp.eventType$';
+	}
+	$endif$
 }
 >>
-varSelectDecal(fieldItem)::=<<$if(fieldItem.optionsName)$$fieldItem.optionsName$=[]; $endif$>>
-varSelectInit(fieldItem)::=<<$if(fieldItem.optionsName)$this.$fieldItem.optionsName$=this.getData('$fieldItem.optionsName$');$endif$>>
+varSelectDecal(fieldItem)::=<<$if(fieldItem.optionsName)$$fieldItem.optionsName$=[];$endif$>>
+varSelectInit(fieldItem)::=<<$if(fieldItem.optionsName)$this.$fieldItem.optionsName$=this.getData('$fieldItem.name$');$endif$>>
 functionDecl(function)::=<<
+>>
+initformALinks(form)::=<<
+this.formALinks = [
+	$form:{item|$anchorItem(item)$};separator=",\n"$
+];
+>>
+anchorItem(item)::=<<$if(item.items)${href:'#$item.id$',desc:'$item.desc$'}$item.items:{item|$anchorItem(item)$};separator=",\n"$$endif$
 >>

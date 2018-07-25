@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import com.cs.screen.builder.item.Componment;
+import com.cs.screen.builder.item.Component;
 
 public class ComponentBuilder implements TemplateGenerator {
 	private CompHtmlBuilder html;
@@ -15,7 +15,7 @@ public class ComponentBuilder implements TemplateGenerator {
 	public String generate() {
 		return "";
 	}
-	public void generateFile(String name ,Componment comp) throws FileNotFoundException {
+	public void generateFile(String name ,Component comp) throws FileNotFoundException {
 		File file=new File(path,name.toLowerCase());
 		if(!file.exists())
 			file.mkdirs();
@@ -27,11 +27,11 @@ public class ComponentBuilder implements TemplateGenerator {
 		tsWriter.close();
 	}
 	private File getHtml(File parent,String name) {
-		File file=new File(parent,name.toLowerCase()+".componment.html");
+		File file=new File(parent,name.toLowerCase()+".component.html");
 		return file;
 	}
 	private File getTs(File parent,String name) {
-		File file=new File(parent,name.toLowerCase()+".componment.ts");
+		File file=new File(parent,name.toLowerCase()+".component.ts");
 		return file;
 	}
 

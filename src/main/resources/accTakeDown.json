@@ -11,29 +11,33 @@
           "type":"input",
           "desc":"Customer ID",
           "name":"IA_C_BORROWER_ID",
-          "required":true
+          "required":true,
+          "checks":["required"]
         },
         {
           "type":"input",
           "desc":"Reference No.",
           "name":"IA_C_REF_NO",          
-          "required":true
+          "required":true,
+          "checks":["required"]
         },
         {
           "type":"date-picker",
           "desc":"Transaction Value Date.",
           "name":"IA_D_TRX_VALDATE",         
-          "required":true
+          "required":true,
+          "checks":["required"]
         },
         {
           "type":"date-picker",
           "desc":"Due Date",
           "name":"IA_D_DUE_DATE",
-          "required":true
+          "required":true,
+          "checks":["required"]
         },
         {
           "type":"input-number",
-          "desc":" Grace Days",
+          "desc":"Grace Days",
           "name":"IA_I_GRACE_DAYS",
           "required":false
         },
@@ -42,13 +46,15 @@
           "desc":"Currency Code",
           "name":"IA_C_CCY_CODE",
           "optionsName":"ccys",
-          "required":true
+          "required":true,
+          "checks":["required"]
         },
         {
           "type":"input-number",
-          "desc":" Transaction Amount",
+          "desc":"Transaction Amount",
           "name":"IA_Y_TRX_AMT",
-          "required":true
+          "required":true,
+          "checks":["required"]
         }
       ]
     },
@@ -76,14 +82,16 @@
           "type":"input-number",
           "desc":"Fixed Base Rate",
           "name":"IA_N_FIX_BAS_RATE",
-          "required":false
+          "required":false,
+          "showIf":"model.BaseRateType=='Fixed'"
         },
         {
           "type":"select",
           "desc":"Floating Base Rate Table ID",
           "name":"IA_C_FLT_RAT_TBLID",
           "optionsName":"fltRatIds",
-          "required":false
+          "required":false,
+          "showIf":"model.BaseRateType=='Floating'"
         },
         {
           "type":"select",
@@ -109,7 +117,8 @@
               "value":"3"
             }
           ],       
-          "required":false
+          "required":false,
+          "showIf":"model.BaseRateType=='Floating'"
         },
         {
           "type":"select",
@@ -131,14 +140,16 @@
           "type":"input-number",
           "desc":"Fixed Spread Rate",
           "name":"IA_N_FIX_SPR_RATE",
-          "required":false
+          "required":false,
+          "showIf":"model.SpreadRateType=='Fixed'"    
         },
         {
           "type":"select",
           "desc":"Floating Spread Rate Table ID",
           "name":"IA_C_SPR_RAT_TBLID",
           "optionsName":"sprRatIds",
-          "required":false
+          "required":false,
+          "showIf":"model.SpreadRateType=='Floating'"
         },
         {
           "type":"select",
@@ -162,7 +173,8 @@
               "value":"3"
             }
           ],
-          "required":false
+          "required":false,
+          "showIf":"model.SpreadRateType=='Floating'"
         },
         {
           "type":"input-number",
@@ -303,7 +315,8 @@
           "desc":"Account Type",
           "name":"IA_C_ACCOUNT_TYPE",
           "optionsName":"accountTypes",
-          "required":true
+          "required":true,
+          "checks":["required"]          
         }
       ]
     },

@@ -11,5 +11,7 @@ public class Consts {
     public static final String EventType_onOpenChange="onOpenChange";
     public static final String EventType_onSearch="onSearch";
     public static final String EventType_onScrollToBottom="onScrollToBottom";
+    public static final String Tag_Group="group";
+    public static final String Tag_Item="item";
 
 }

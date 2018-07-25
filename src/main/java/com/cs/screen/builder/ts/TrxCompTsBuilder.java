@@ -7,29 +7,29 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 
 import com.cs.screen.builder.CompTsBuilder;
-import com.cs.screen.builder.item.Componment;
+import com.cs.screen.builder.item.Component;
 import com.cs.screen.builder.item.FieldItem;
 import com.cs.screen.builder.item.GroupItem;
 import com.cs.screen.builder.item.Item;
-import com.cs.screen.builder.item.TrxComponment;
+import com.cs.screen.builder.item.TrxComponent;
 
 public class TrxCompTsBuilder extends CompTsBuilder {
 	private FieldDeclaBuilder fieldDecla;
 	private FieldInitBuilder fieldInit;
 	private EventFuncBuilder eventFunc;
 
-	public String genTrxCompTs(TrxComponment trxComp) {
+	public String genTrxCompTs(TrxComponent trxComp) {
 		ST st = getStGroup().getInstanceOf("trxComponent");
 		st.add("trxComp", trxComp);
 		addData(st, trxComp);
 		return st.render();
 	}
 
-	private void addData(ST st, TrxComponment trxComp) {
+	private void addData(ST st, TrxComponent trxComp) {
 		List<String> varDecal = new LinkedList<>();
 		List<String> varInit = new LinkedList<>();
 		List<String> function = new LinkedList<>();
-		for (Item item : trxComp.getForm().getItems()) {
+		for (Item item : trxComp.getContent().getForm()) {
 			if (item instanceof GroupItem)
 				genGroup((GroupItem) item, varDecal, varInit, function);
 			else if (item instanceof FieldItem)
@@ -57,8 +57,8 @@ public class TrxCompTsBuilder extends CompTsBuilder {
 	}
 
 	@Override
-	public String gengratorPart(Componment comp) {
-		return genTrxCompTs((TrxComponment) comp);
+	public String gengratorPart(Component comp) {
+		return genTrxCompTs((TrxComponent) comp);
 	}
 
 	public TrxCompTsBuilder(STGroup stGroup) {
@@ -69,11 +69,11 @@ public class TrxCompTsBuilder extends CompTsBuilder {
 	}
 
 	@Override
-	public String gengratorPart(String name, Componment comp) {
-		return genTrxCompTs(name, (TrxComponment) comp);
+	public String gengratorPart(String name, Component comp) {
+		return genTrxCompTs(name, (TrxComponent) comp);
 	}
 
-	public String genTrxCompTs(String name, TrxComponment trxComp) {
+	public String genTrxCompTs(String name, TrxComponent trxComp) {
 		ST st = getStGroup().getInstanceOf("trxComponent");
 		st.add("trxComp", trxComp);
 		addData(st, trxComp);

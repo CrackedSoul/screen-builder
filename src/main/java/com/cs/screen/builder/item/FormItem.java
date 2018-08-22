@@ -6,6 +6,8 @@ import java.util.List;
 public class FormItem implements Item {
 	private List<Item> form;
 	private List<String> breadCrumbs;
+	private List<Button> buttons;
+	private InitModel initvalues;
 
 	public FormItem() {
 		super();
@@ -32,4 +34,21 @@ public class FormItem implements Item {
 	public void setBreadCrumbs(List<String> breadCrumbs) {
 		this.breadCrumbs = breadCrumbs;
 	}
+
+	public List<Button> getButtons() {
+		return buttons;
+	}
+
+	public void setButtons(List<Button> buttons) {
+		this.buttons = buttons;
+	}
+
+	public InitModel getInitvalues() {
+		return initvalues;
+	}
+
+	public void setInitvalues(InitModel initvalues) {
+		this.initvalues = initvalues;
+	}
+	
 }

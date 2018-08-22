@@ -16,6 +16,7 @@ import com.cs.screen.builder.item.TrxComponent;
 public class TrxCompTsBuilder extends CompTsBuilder {
 	private FieldDeclaBuilder fieldDecla;
 	private FieldInitBuilder fieldInit;
+	private FieldInitFuncBuilder fieldInitFunc;
 	private EventFuncBuilder eventFunc;
 
 	public String genTrxCompTs(TrxComponent trxComp) {
@@ -28,31 +29,34 @@ public class TrxCompTsBuilder extends CompTsBuilder {
 	private void addData(ST st, TrxComponent trxComp) {
 		List<String> varDecal = new LinkedList<>();
 		List<String> varInit = new LinkedList<>();
+		List<String> varInitFunc = new LinkedList<>();
 		List<String> function = new LinkedList<>();
 		for (Item item : trxComp.getContent().getForm()) {
 			if (item instanceof GroupItem)
-				genGroup((GroupItem) item, varDecal, varInit, function);
+				genGroup((GroupItem) item, varDecal, varInit,varInitFunc, function);
 			else if (item instanceof FieldItem)
-				genField((FieldItem) item, varDecal, varInit, function);
+				genField((FieldItem) item, varDecal, varInit,varInitFunc, function);
 		}
 		st.add("varDecla", varDecal);
 		st.add("varInit", varInit);
+		st.add("varInitFunc", varInitFunc);
 		st.add("function", function);
 	}
 
-	private void genField(FieldItem fieldItem, List<String> varDecal, List<String> varInit, List<String> function) {
+	private void genField(FieldItem fieldItem, List<String> varDecal, List<String> varInit,List<String> varInitFunc, List<String> function) {
 		varDecal.add(fieldDecla.genFieldDecla(fieldItem));
 		varInit.add(fieldInit.genFieldInit(fieldItem));
+		varInitFunc.add(fieldInitFunc.genFieldInitFunc(fieldItem));
 		function.add(eventFunc.genField(fieldItem));
 
 	}
 
-	private void genGroup(GroupItem groupItem, List<String> varDecal, List<String> varInit, List<String> function) {
+	private void genGroup(GroupItem groupItem, List<String> varDecal, List<String> varInit,List<String> varInitFunc, List<String> function) {
 		for (Item item : groupItem.getItems()) {
 			if (item instanceof GroupItem)
-				genGroup((GroupItem) item, varDecal, varInit, function);
+				genGroup((GroupItem) item, varDecal, varInit,varInitFunc, function);
 			else if (item instanceof FieldItem)
-				genField((FieldItem) item, varDecal, varInit, function);
+				genField((FieldItem) item, varDecal, varInit,varInitFunc, function);
 		}
 	}
 
@@ -65,6 +69,7 @@ public class TrxCompTsBuilder extends CompTsBuilder {
 		super(stGroup);
 		fieldDecla = new FieldDeclaBuilder(stGroup);
 		fieldInit = new FieldInitBuilder(stGroup);
+		fieldInitFunc=new FieldInitFuncBuilder(stGroup);
 		eventFunc = new EventFuncBuilder(stGroup);
 	}
 

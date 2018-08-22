@@ -1,4 +1,4 @@
-trxComponent(trxComp,name,compName,varDecla,varInit,function) ::= <<
+trxComponent(trxComp,name,compName,varDecla,varInit,function,varInitFunc) ::= <<
 import { Component } from "@angular/core";
 import { TrxFuncComponent } from "src/app/domain/eloan/trxfunc/trxfunc.component";
 
@@ -20,11 +20,23 @@ export class $compName$Component extends TrxFuncComponent {
 		return '$trxComp.eventType$';
 	}
 	$endif$
+	protected updataModel() {
+		$initModel(trxComp.content.initvalues)$
+	}
+	$varInitFunc:{varfunc|$varfunc$};separator="\n"$
+	
 }
 >>
 varSelectDecal(fieldItem)::=<<$if(fieldItem.optionsName)$$fieldItem.optionsName$=[];$endif$>>
-varSelectInit(fieldItem)::=<<$if(fieldItem.optionsName)$this.$fieldItem.optionsName$=this.getData('$fieldItem.name$');$endif$>>
+varSelectInit(fieldItem)::=<<$if(fieldItem.optionsName)$this.$fieldItem.optionsName$=this.get$fieldItem.name$Data();$endif$>>
+varInitFunc(fieldItem)::=<<$if(fieldItem.optionsName)$get$fieldItem.name$Data(){}$endif$>>
 functionDecl(function)::=<<
+>>
+
+initModel(initvalues)::=<<
+	$initvalues.constant:{item| this.model.$item.name$='$item.value$';};separator="\n"$
+	$initvalues.sysunit:{item| this.model.$item.name$=this.userService.getUnitInfo().$item.value$;};separator="\n"$
+	$initvalues.sysuser:{item| this.model.$item.name$=this.userService.getUserInfo().$item.value$;};separator="\n"$
 >>
 initformALinks(form)::=<<
 this.formALinks = [

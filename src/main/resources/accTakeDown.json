@@ -1,362 +1,315 @@
 {
-  "group":"Acc",
-  "name":"TakeDownComponent",
-  "form":{
-  "items":[
-    {
-      "desc":"Base Information",
-      "id":"Acc-BaseInfo",
-      "items":[
-        {
-          "type":"input",
-          "desc":"Customer ID",
-          "name":"IA_C_BORROWER_ID",
-          "required":true,
-          "checks":["required"]
+    "name": "AccTakeDown",
+    "component": "TrxFuncComponent",
+    "eventType": "8030",
+    "content": {
+        "breadCrumb": ["Home","Function","Take Down"],
+        "initvalues": {
+          "constant": [
+	          {
+	          	"name":"IA_C_MODU_NAME",
+	          	"value":"IAAC"
+	          },
+	          {
+	          	"name":"IA_I_BASE_DAYS",
+	          	"value":"365"
+	          },{
+	          	"name":"IA_C_AUTODBT_FLG",
+	          	"value":"N"
+	          },{
+	          	"name":"IA_N_EXCH_RATE",
+	          	"value":"1"
+	          }
+          ],        
+           "sysunit": [
+           	  {
+	          	"name":"C_BK_GROUP_ID",
+	          	"value":"C_BK_GROUP_ID"
+	          },{
+	          	"name":"C_CNTY_CODE",
+	          	"value":"C_CNTY_CODE"
+	          },{
+	          	"name":"C_UNIT_CODE",
+	          	"value":"C_UNIT_CODE"
+	          },{
+	          	"name":"C_CP_UNIT_CODE",
+	          	"value":"C_CP_UNIT_CODE"
+	          }                  
+           ],
+           "sysuser": [
+	           {
+	           	"name":"IA_C_CREATE_BY",
+		        "value":"USER_NAME"
+	           }                         
+           ],
+           "sysfunc": {                         
+           }
         },
-        {
-          "type":"input",
-          "desc":"Reference No.",
-          "name":"IA_C_REF_NO",          
-          "required":true,
-          "checks":["required"]
-        },
-        {
-          "type":"date-picker",
-          "desc":"Transaction Value Date.",
-          "name":"IA_D_TRX_VALDATE",         
-          "required":true,
-          "checks":["required"]
-        },
-        {
-          "type":"date-picker",
-          "desc":"Due Date",
-          "name":"IA_D_DUE_DATE",
-          "required":true,
-          "checks":["required"]
-        },
-        {
-          "type":"input-number",
-          "desc":"Grace Days",
-          "name":"IA_I_GRACE_DAYS",
-          "required":false
-        },
-        {
-          "type":"select",
-          "desc":"Currency Code",
-          "name":"IA_C_CCY_CODE",
-          "optionsName":"ccys",
-          "required":true,
-          "checks":["required"]
-        },
-        {
-          "type":"input-number",
-          "desc":"Transaction Amount",
-          "name":"IA_Y_TRX_AMT",
-          "required":true,
-          "checks":["required"]
-        }
-      ]
-    },
-    {
-      "desc":"Rate Information",
-      "id":"Acc-RateInfo",
-      "items":[
-        {
-          "type":"select",
-          "desc":"Base Rate Type",
-          "name":"BaseRateType",
-          "options":[
+        "buttons": [
             {
-              "label":"Fixed Rate",
-              "value":"Fixed"
-            },
+                "button": "Confirm",
+                "disabled": true,
+                "click":"onSubmit(mainForm)"
+            },   
             {
-              "label":"Floating Rate",
-              "value":"Floating"
+                "button": "Cancel",
+                "disabled": true,
+                "click":"cancel()"
             }
-          ],         
-          "required":false
-        },
-        {
-          "type":"input-number",
-          "desc":"Fixed Base Rate",
-          "name":"IA_N_FIX_BAS_RATE",
-          "required":false,
-          "showIf":"model.BaseRateType=='Fixed'"
-        },
-        {
-          "type":"select",
-          "desc":"Floating Base Rate Table ID",
-          "name":"IA_C_FLT_RAT_TBLID",
-          "optionsName":"fltRatIds",
-          "required":false,
-          "showIf":"model.BaseRateType=='Floating'"
-        },
-        {
-          "type":"select",
-          "desc":"Floating Base Rate Number",
-          "name":"IA_I_FLT_RATE_NO",
-          "events":[
-          ],
-          "options":[
+        ],
+        "shortcuts": [
+            
+        ],     
+        "form": [
             {
-              "label":"0",
-              "value":"0"
+                "tag": "group",
+      			"id":"Loan-BaseInfo",
+                "desc":"Base Information",
+      			    "items":[
+                    {
+                          "tag": "item",
+				                  "type":"input",
+				                  "desc":"Customer ID",
+				                  "name":"IA_C_BORROWER_ID",
+				                  "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+				                  "type":"input",
+				                  "desc":"Reference No.",
+        				          "name":"IA_C_REF_NO",          
+        				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+        				          "type":"date-picker",
+        				          "desc":"Transaction Value Date.",
+        				          "name":"IA_D_TRX_VALDATE",         
+        				          "checks":["required"]
+                    },
+                    {
+                          "tag": "item",
+        				          "type":"date-picker",
+				                  "desc":"Due Date",
+				                  "name":"IA_D_DUE_DATE",
+				                  "checks":["required"]
+                    },                 
+                    {
+                          "tag": "item",
+				                  "type":"input-number",
+				                  "desc":"Grace Days",
+				                  "name":"IA_I_GRACE_DAYS"
+                    },
+                    {
+                          "tag": "item",
+				                  "type":"select",
+				                  "desc":"Currency Code",
+				                  "name":"IA_C_CCY_CODE",
+				                  "optionsName":"ccys",
+				                  "checks":["required"]
+                    },
+                    {
+                       	  "tag": "item",
+                          "type":"input-number",
+				                  "desc":"Transaction Amount",
+				                  "name":"IA_Y_TRX_AMT",
+				                  "checks":["required"]
+                    }
+                ]
             },
             {
-              "label":"1",
-              "value":"1"
+                "tag": "group",
+			          "id":"Loan-RateInfo",
+      			    "desc":"Rate Information",
+      			    "items":[
+                    {
+	                	      "tag": "item",
+			                    "type":"select",
+				                  "desc":"Base Rate Type",
+				                  "name":"BaseRateType",
+				                  "options":[
+				                  {
+				                      "label":"Fixed Rate",
+				                      "value":"Fixed"
+				                  },
+				                  {
+				                      "label":"Floating Rate",
+				                      "value":"Floating"
+				                  }
+				                  ]
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"input-number",
+				                  "desc":"Fixed Base Rate",
+				                  "name":"IA_N_FIX_BAS_RATE",
+				                  "showIf":"model.BaseRateType=='Fixed'"
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"select",
+			                    "desc":"Floating Base Rate Table ID",
+				                  "name":"IA_C_FLT_RAT_TBLID",
+				                  "optionsName":"fltRatIds",
+				                  "showIf":"model.BaseRateType=='Floating'"
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"select",
+				                  "desc":"Floating Base Rate Number",
+				                  "name":"IA_I_FLT_RATE_NO",
+				                  "events":[
+				                  ],
+				                  "options":[
+				                  {
+				                      "label":"0",
+				                      "value":"0"
+				                  },
+				                  {
+				                      "label":"1",
+				                      "value":"1"
+				                  },
+				                  {
+				                      "label":"2",
+				                      "value":"2"
+				                  },
+				                  {
+				                      "label":"3",
+				                      "value":"3"
+				                  }
+				                  ],       
+				                  "showIf":"model.BaseRateType=='Floating'"
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"select",
+				                  "desc":"Spread Rate Type",
+				                  "name":"SpreadRateType",
+				                  "options":[
+				                  {
+				                      "label":"Fixed Rate",
+				                      "value":"Fixed"
+				                  },
+				                  {
+				                      "label":"Floating Rate",
+				                      "value":"Floating"
+				                  }
+				                  ]
+            		    },
+                		{
+	                    	  "tag": "item",
+			                    "type":"input-number",
+				                  "desc":"Fixed Spread Rate",
+				                  "name":"IA_N_FIX_SPR_RATE",
+				                  "showIf":"model.SpreadRateType=='Fixed'"   
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"select",
+				                  "desc":"Floating Spread Rate Table ID",
+				                  "name":"IA_C_SPR_RAT_TBLID",
+				                  "optionsName":"sprRatIds",
+				                  "showIf":"model.SpreadRateType=='Floating'"
+            		    },
+            		    {
+	                	      "tag": "item",
+			                    "type":"select",
+				                  "desc":"Floating Spread Rate Number",
+				                  "name":"IA_I_SPR_RATE_NO",
+				                  "options":[
+				                  {
+				                      "label":"0",
+				                      "value":"0"
+				                  },
+				                  {
+				                      "label":"1",
+				                      "value":"1"
+				                  },
+				                  {
+				                      "label":"2",
+				                      "value":"2"
+				                  },
+				                  {
+				                      "label":"3",
+				                      "value":"3"
+				                  }
+				                  ],
+				                  "showIf":"model.SpreadRateType=='Floating'"
+            		    },
+            		    {
+		            	        "tag": "item",
+		            	        "type":"input-number",
+				                  "desc":"Fixed Profit Rate",
+				                  "name":"IA_N_FIX_PFT_RATE"
+				            },
+				            {
+				    	            "tag": "item",
+				    	            "type":"input-number",
+				                  "desc":"Penalty Rate",
+				                  "name":"IA_N_PEN_RATE"
+				            }
+                ]
             },
-            {
-              "label":"2",
-              "value":"2"
-            },
-            {
-              "label":"3",
-              "value":"3"
-            }
-          ],       
-          "required":false,
-          "showIf":"model.BaseRateType=='Floating'"
-        },
-        {
-          "type":"select",
-          "desc":"Spread Rate Type",
-          "name":"SpreadRateType",
-          "options":[
-            {
-              "label":"Fixed Rate",
-              "value":"Fixed"
-            },
-            {
-              "label":"Floating Rate",
-              "value":"Floating"
-            }
-          ],
-          "required":false
-        },
-        {
-          "type":"input-number",
-          "desc":"Fixed Spread Rate",
-          "name":"IA_N_FIX_SPR_RATE",
-          "required":false,
-          "showIf":"model.SpreadRateType=='Fixed'"    
-        },
-        {
-          "type":"select",
-          "desc":"Floating Spread Rate Table ID",
-          "name":"IA_C_SPR_RAT_TBLID",
-          "optionsName":"sprRatIds",
-          "required":false,
-          "showIf":"model.SpreadRateType=='Floating'"
-        },
-        {
-          "type":"select",
-          "desc":"Floating Spread Rate Number",
-          "name":"IA_I_SPR_RATE_NO",
-          "options":[
-            {
-              "label":"0",
-              "value":"0"
-            },
-            {
-              "label":"1",
-              "value":"1"
-            },
-            {
-              "label":"2",
-              "value":"2"
-            },
-            {
-              "label":"3",
-              "value":"3"
-            }
-          ],
-          "required":false,
-          "showIf":"model.SpreadRateType=='Floating'"
-        },
-        {
-          "type":"input-number",
-          "desc":"Fixed Profit Rate",
-          "name":"IA_N_FIX_PFT_RATE",
-          "required":false
-        },
-        {
-          "type":"input-number",
-          "desc":"Penalty Rate",
-          "name":"IA_N_PEN_RATE",
-          "required":false
-        }
-      ]
-    },
-    {
-      "desc":"Premium/Discount Information",
-      "id":"Acc-PreDisInfo",
-      "items":[
-        {
-          "type":"select",
-          "desc":"Amortize Flag",
-          "name":"IA_C_AMZ_FLG",
-          "options":[
-            {
-              "label":"Yes",
-              "value":"Y"
-            },
-            {
-              "label":"No",
-              "value":"N"
-            }
-          ],
-          "required":false
-        },
-        {
-          "type":"date-picker",
-          "desc":"Last Coupon Payment Date",
-          "name":"IA_D_LAST_CPNDATE",
-          "required":false
-        },
-        {
-          "type":"input-number",
-          "desc":"Book Transaction Amount",
-          "name":"IA_Y_BV_TRX_AMT",
-          "required":false
-        },
-        {
-          "type":"select",
-          "desc":"Delay Flag",
-          "name":"IA_C_DLY_FLG",
-          "options":[
-            {
-              "label":"Yes",
-              "value":"Y"
-            },
-            {
-              "label":"No",
-              "value":"N"
-            }
-          ],
-          "required":false
-        }
-      ]
-    },
-    {
-      "desc":"Payment Schedule Information",
-      "id":"Acc-PSInfo",
-      "items":[
-        {
-          "type":"select",
-          "desc":"Payment Schedule Type",
-          "name":"IA_C_SCHE_TYPE",
-          "options":[
-            {
-              "label":"Yes",
-              "value":"Y"
-            },
-            {
-              "label":null,
-              "value":null
-            }
-          ],
-          "required":false
-        },
-        {
-          "type":"select",
-          "desc":"Coupon Type",
-          "name":"IA_C_CPN_TYPE",
-          "options":[
-            {
-              "label":"Annual",
-              "value":"Annual"
-            },
-            {
-              "label":"Semi-Annual",
-              "value":"Semi-Annual"
-            },
-            {
-              "label":"Quarterly",
-              "value":"Quarterly"
-            },
-            {
-              "label":"Bi-Monthly",
-              "value":"Bi-Monthly"
-            },
-            {
-              "label":"Monthly",
-              "value":"Monthly"
-            },
-            {
-              "label":"Weekly",
-              "value":"Weekly"
-            },
-            {
-              "label":"Daily",
-              "value":"Daily"
-            },
-            {
-              "label":"AtMaturity",
-              "value":"AtMaturity"
-            },
-            {
-              "label":null,
-              "value":null
-            }
-          ],
-          "required":false
-        }
-      ]
-    },
-    {
-      "desc":"Accrual/Posting Information",
-      "id":"Acc-PostInfo",
-      "items":[
-        {
-          "type":"select",
-          "desc":"Account Type",
-          "name":"IA_C_ACCOUNT_TYPE",
-          "optionsName":"accountTypes",
-          "required":true,
-          "checks":["required"]          
-        }
-      ]
-    },
-    {
-      "desc":"Other Information",
-      "id":"Acc-OtherInfo",
-      "items":[
-        {
-          "type":"input",
-          "desc":"Transaction Code",
-          "name":"IA_C_TRANS_CODE",
-          "required":false
-        },
-        {
-          "type":"input",
-          "desc":"Customer Code",
-          "name":"IA_C_CUST_CODE",
-          "required":false
-        },
-        {
-          "type":"input",
-          "desc":"Purpose ID",
-          "name":"IA_C_PURP_ID",
-          "required":false
-        },
-        {
-          "type":"input",
-          "desc":"Form ID",
-          "name":"IA_C_FORM_ID",
-          "required":false
-        },
-        {
-          "type":"input",
-          "desc":"Coupon Day",
-          "name":"IA_C_ORIG_CPNDAY",
-          "required":false
-        }
-      ]
+        	{
+                "tag": "group",
+			          "id":"Loan-PostInfo",
+			          "desc":"Accrual/Posting Information",
+      			    "items":[
+				            {
+				    	          "tag": "item",
+				    	          "type":"select",
+				                  "desc":"Account Type",
+				                  "name":"IA_C_ACCOUNT_TYPE",
+				                  "optionsName":"accountTypes",
+				                  "checks":["required"]
+				            },
+            		    {
+                          "tag": "item",
+				                  "type":"input",
+				                  "desc":"Accrue Base",
+				                  "name":"C_ACCR_BASE",
+				                  "showIf":"model.IA_C_ACCOUNT_TYPE"
+            		    },				            
+            		    {
+                          "tag": "item",
+				                  "type":"input",
+				                  "desc":"Posting Frequence",
+				                  "name":"C_POST_FRE",
+				                  "showIf":"model.IA_C_ACCOUNT_TYPE"
+            		    }				            
+				        ]
+      		  },
+        	{
+                "tag": "group",
+			          "id":"Loan-AdditionalInfo",
+      			    "desc":"Additional Information",
+      			    "items":[
+      				      {
+				    	            "tag": "item",
+				    	            "type":"input",
+				                  "desc":"Transaction Code",
+				                  "name":"IA_C_TRANS_CODE"
+				            },
+				            {
+				    	            "tag": "item",
+				    	            "type":"input",
+				                  "desc":"Customer Code",
+				                  "name":"IA_C_CUST_CODE"
+				            },
+				            {
+				    	            "tag": "item",
+				    	            "type":"input",
+				                  "desc":"Purpose ID",
+				                  "name":"IA_C_PURP_ID"
+				            },
+				            {
+				    	            "tag": "item",
+				    	            "type":"input",
+				                  "desc":"Form ID",
+				                  "name":"IA_C_FORM_ID"
+				            }
+      			    ]
+      		  }   
+        ]
     }
-  ]
-  },
-  "breadCrumb":["Home","Function","Take Down"]
 }

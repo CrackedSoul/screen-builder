@@ -9,10 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.cs.screen.builder.consts.Consts;
+import com.cs.screen.builder.item.Button;
 import com.cs.screen.builder.item.DatePickerFieldItem;
 import com.cs.screen.builder.item.FieldItem;
 import com.cs.screen.builder.item.FormItem;
 import com.cs.screen.builder.item.GroupItem;
+import com.cs.screen.builder.item.InitItem;
+import com.cs.screen.builder.item.InitModel;
 import com.cs.screen.builder.item.InputFieldItem;
 import com.cs.screen.builder.item.Item;
 import com.cs.screen.builder.item.NumFieldItem;
@@ -69,15 +72,42 @@ public class JsonUtils {
     	}
     	return rtn;
     }
+    private static List<Button> getButtons(JsonArray items) {
+    	List<Button> rtn=new LinkedList<Button>();
+    	Iterator<JsonElement> itemIterator=items.iterator();
+    	while(itemIterator.hasNext()){
+    		JsonObject button = itemIterator.next().getAsJsonObject();
+    		rtn.add(new Button(button.get("button").getAsString(),button.get("disabled").getAsBoolean(),button.get("click").getAsString()));
+    	}
+    	return rtn;
+	}
 
     public static FormItem convertForm(JsonObject jsonObject) {
     	FormItem rtn=new FormItem();
     	rtn.setForm(convertItems(jsonObject.getAsJsonArray("form")));     
     	rtn.setBreadCrumbs(getBreadCurmbs(jsonObject.getAsJsonArray("breadCrumb")));
+    	rtn.setButtons(getButtons(jsonObject.getAsJsonArray("buttons")));
+    	rtn.setInitvalues(convertInitval(jsonObject.getAsJsonObject("initvalues")));  
 		return rtn;
     }
 
-    private static List<Item> convertItems(JsonArray items) {
+    
+	private static InitModel convertInitval(JsonObject jsonObject) {
+		InitModel rtn=new InitModel();
+		rtn.setConstant(convertInitVals(jsonObject.getAsJsonArray("constant")));
+		rtn.setSysunit(convertInitVals(jsonObject.getAsJsonArray("sysunit")));
+		rtn.setSysuser(convertInitVals(jsonObject.getAsJsonArray("sysuser")));
+		return rtn;
+	}
+	private static List<InitItem> convertInitVals(JsonArray asJsonArray) {
+		List<InitItem> rtn=new LinkedList<InitItem>();
+    	Iterator<JsonElement> itemIterator=asJsonArray.iterator();
+    	while(itemIterator.hasNext()){
+    		rtn.add(new Gson().fromJson(itemIterator.next(), InitItem.class));
+    	}
+    	return rtn;
+	}
+	private static List<Item> convertItems(JsonArray items) {
         if (items==null||items.isJsonNull()){
             return  null;
         }

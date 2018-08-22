@@ -1,8 +1,10 @@
-trxComp(breadCrumb,form,anchor)::=<<
+trxComp(breadCrumb,form,anchor,buttons)::=<<
 <main>
 	$breadCrumb$
+	$buttons$
 	$anchor$
 	$form$
+	<log-info [logInfo]='logInfo' (Outtoggle)="toggleLog()" [hidden]="hideLog"></log-info>
 </main>
 >>
 
@@ -11,8 +13,14 @@ breadCrumbs(breadCrumbs)::=<<
 	$breadCrumbs:{breadCrumb|<nz-breadcrumb-item>$breadCrumb$</nz-breadcrumb-item>};separator="\n"$
 </nz-breadcrumb>
 >>
+buttons(buttons)::=<<
+<buttons>
+	$buttons:{button|<button nz-button (click)='$button.click$' nzType="default"$if(button.disabled)$disabled$endif$>$button.button$</button>};separator="\n"$
+	<button nz-button (click)='toggleLog()' nzType="default">Log</button>
+</buttons>
+>>
 anchor(form)::=<<
-$if(form.items)$<anchor [links]="formALinks"></anchor>$endif$
+$if(form.form)$<anchor [links]="formALinks"></anchor>$endif$
 >>
 anchorItem(item)::=<<$if(item.items)$<nz-link nzHref="#$item.id$" nzTitle="$item.desc$">
 	$item.items:{item|$anchorItem(item)$};separator="\n"$
